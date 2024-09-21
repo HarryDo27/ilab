@@ -12,7 +12,7 @@ import utils  # Assuming utils has the functions for loading datasets and models
 warnings.filterwarnings("ignore")
 
 
-class CifarClient(fl.client.NumPyClient):
+class Client(fl.client.NumPyClient):
     def __init__(
         self,
         train_loader: DataLoader,
@@ -109,7 +109,10 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() and args.use_cuda else "cpu")
 
     # Load the dataset from the specified directory
-    train_loader, val_loader, test_loader = utils.load_custom_cifar10(args.data_dir)
+    # Load the lung cancer dataset from the specified CSV and image directory
+    train_loader, val_loader, test_loader = utils.load_lung_cancer_data(csv_file="/Users/harrydo/Downloads/archive-5/recurrence.csv", 
+                                                                        image_dir="/Users/harrydo/Downloads/archive-5/ROI/ROI")
+
 
     if args.toy:
         # Create subsets of the dataset if the toy flag is used
@@ -118,8 +121,8 @@ def main():
         test_loader = DataLoader(Subset(test_loader.dataset, range(10)), batch_size=16)
 
     # Start the Flower client
-    client = CifarClient(train_loader, val_loader, test_loader, device, args.model)
-    fl.client.start_client(server_address="172.19.109.124:8080", client=client)
+    client = Client(train_loader, val_loader, test_loader, device, args.model)
+    fl.client.start_client(server_address="172.19.113.235:8080", client=client)
 
 
 if __name__ == "__main__":

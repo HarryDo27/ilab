@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore")
 def fit_config(server_round: int):
     """Return training configuration dict for each round.
 
-    Keep batch size fixed at 32, perform two rounds of training with one local epoch,
+    Keep batch size fixed at 16, perform two rounds of training with one local epoch,
     increase to two local epochs afterwards.
     """
     config = {
@@ -34,24 +34,8 @@ def evaluate_config(server_round: int):
 
 
 def get_evaluate_fn(model: torch.nn.Module, toy: bool):
-    """Return an evaluation function for server-side evaluation."""
-    print('Running custom evaluation')
-
-    # No centralized data is needed since server does not perform evaluation
-    def evaluate(
-        server_round: int,
-        parameters: fl.common.NDArrays,
-        config: Dict[str, fl.common.Scalar],
-    ) -> Optional[Tuple[float, Dict[str, fl.common.Scalar]]]:
-        # Update model with the latest parameters
-        params_dict = zip(model.state_dict().keys(), parameters)
-        state_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
-        model.load_state_dict(state_dict, strict=True)
-
-        # No evaluation logic on the server, evaluation happens on clients
-        return 0.0, {"accuracy": 0.0}  # Placeholder, as the server does not evaluate
-
-    return evaluate
+    """Return None as no centralized evaluation is needed."""
+    return None
 
 
 class CustomFedAvg(fl.server.strategy.FedAvg):
@@ -60,10 +44,32 @@ class CustomFedAvg(fl.server.strategy.FedAvg):
     ):
         """Aggregate fit results and print client results."""
         print(f"Round {rnd} - Results from clients:")
-        for i, (client, fit_res) in enumerate(results):
-            print(f"Client {i} - Loss: {fit_res.metrics.get('val_loss')}, Accuracy: {fit_res.metrics.get('val_accuracy')}")
         
-        # Call the original FedAvg aggregation (to perform normal FedAvg aggregation)
+        # Aggregate loss and accuracy across all clients
+        total_loss = 0
+        total_accuracy = 0
+        total_samples = 0
+        
+        for i, (client, fit_res) in enumerate(results):
+            # Extract client-side metrics
+            val_loss = fit_res.metrics.get("val_loss")
+            val_accuracy = fit_res.metrics.get("val_accuracy")
+            num_examples = fit_res.num_examples
+            
+            print(f"Client {i} - Loss: {val_loss}, Accuracy: {val_accuracy}")
+            
+            # Aggregate results across clients
+            total_loss += val_loss * num_examples
+            total_accuracy += val_accuracy * num_examples
+            total_samples += num_examples
+        
+        # Calculate average loss and accuracy across all clients
+        avg_loss = total_loss / total_samples if total_samples > 0 else 0
+        avg_accuracy = total_accuracy / total_samples if total_samples > 0 else 0
+        
+        print(f"Aggregated - Loss: {avg_loss}, Accuracy: {avg_accuracy}")
+        
+        # Return the aggregated loss and accuracy
         return super().aggregate_fit(rnd, results, failures)
 
 
@@ -120,7 +126,7 @@ def main():
 
     # Start Flower server for four rounds of federated learning
     fl.server.start_server(
-        server_address="172.19.109.124:8080",
+        server_address="172.19.113.235:8080",
         config=fl.server.ServerConfig(num_rounds=4),
         strategy=strategy,
     )

@@ -9,33 +9,78 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, random_split
 
 warnings.filterwarnings("ignore")
+import pandas as pd
+import numpy as np
+from PIL import Image
 
+class LungCancerDataset(torch.utils.data.Dataset):
+    def __init__(self, csv_file, image_dir, transform=None):
+        """
+        Args:
+            csv_file (str): Path to the CSV file with SOPInstanceUID and labels.
+            image_dir (str): Directory with all the images (in .npy format).
+            transform (callable, optional): Optional transform to be applied
+                on an image.
+        """
+        self.data_frame = pd.read_csv(csv_file)
+        self.image_dir = image_dir
+        self.transform = transform
+        
+        # Filter rows in data_frame where SOPInstanceUID matches files in the image directory
+        available_images = [f.replace('.npy', '') for f in os.listdir(image_dir) if f.endswith('.npy')]
+        self.data_frame = self.data_frame[self.data_frame['SOPInstanceUID'].isin(available_images)]
 
-def load_custom_cifar10(data_dir: str, batch_size: int = 32):
-    """Loads a CIFAR-10 style dataset from the specified directory."""
+    def __len__(self):
+        return len(self.data_frame)
 
-    # Define the transformations (resize and normalize)
+    def __getitem__(self, idx):
+        # Load the .npy file using SOPInstanceUID as the filename
+        sop_uid = self.data_frame.iloc[idx]['SOPInstanceUID']
+        img_name = os.path.join(self.image_dir, sop_uid + ".npy")
+        image = np.load(img_name)  # Load the .npy file as a NumPy array
+
+        # Convert the NumPy array to a PIL image (or leave it as a tensor if you prefer)
+        image = Image.fromarray(image)
+
+            # Convert 1-channel grayscale to 3-channel by repeating the array along the third axis
+        image = image.convert("RGB")
+
+    # Apply any transforms, if provided
+        if self.transform:
+            image = self.transform(image)
+
+        # Get the label (Recurrence: 'yes'/'no' in the 'Recurrence' column)
+        label = self.data_frame.iloc[idx]['Recurrence']
+        label = 1 if label == 'yes' else 0  # Convert 'yes' to 1 and 'no' to 0
+
+        return image, label
+
+def load_lung_cancer_data(csv_file: str, image_dir: str, batch_size: int = 32):
+    """Load lung cancer recurrence dataset from the specified CSV and image directory."""
+
+    # Define the transformations (resize and normalize based on the needs of your dataset)
     transform = transforms.Compose([
-        transforms.Resize((32, 32)),  # Ensure the size is consistent with CIFAR-10
+        transforms.Resize((224, 224)),  # Adjust this size as per your model's input
         transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))  # CIFAR-10 normalization
+        transforms.Normalize((0.5,), (0.5,))  # Adjust normalization if needed
     ])
 
-    # Load the dataset from the specified directory
-    trainset = datasets.ImageFolder(root=os.path.join(data_dir, 'train'), transform=transform)
-    testset = datasets.ImageFolder(root=os.path.join(data_dir, 'test'), transform=transform)
+    # Load the dataset
+    dataset = LungCancerDataset(csv_file=csv_file, image_dir=image_dir, transform=transform)
 
-    # Optionally split the trainset for validation
-    val_size = int(0.1 * len(trainset))  # 10% validation
-    train_size = len(trainset) - val_size
-    trainset, valset = random_split(trainset, [train_size, val_size])
+    # Split the dataset (e.g., 70% train, 15% val, 15% test)
+    train_size = int(0.7 * len(dataset))
+    val_size = int(0.15 * len(dataset))
+    test_size = len(dataset) - train_size - val_size
+    train_set, val_set, test_set = random_split(dataset, [train_size, val_size, test_size])
 
     # Create data loaders for training, validation, and testing
-    train_loader = DataLoader(trainset, batch_size=batch_size, shuffle=True)
-    val_loader = DataLoader(valset, batch_size=batch_size)
-    test_loader = DataLoader(testset, batch_size=batch_size)
-
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
+    val_loader = DataLoader(val_set, batch_size=batch_size)
+    test_loader = DataLoader(test_set, batch_size=batch_size)
+    
     return train_loader, val_loader, test_loader
+
 
 
 def train(
