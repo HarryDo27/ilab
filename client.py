@@ -6,7 +6,6 @@ from typing import Optional
 import flwr as fl
 import torch
 from torch.utils.data import DataLoader, Subset
-
 import utils  # Assuming utils has the functions for loading datasets and models
 
 warnings.filterwarnings("ignore")
@@ -87,8 +86,8 @@ def main():
 
     # Add data directory argument
     parser.add_argument(
-        "--data-dir", type=str, default="/Users/harrydo/Documents/UTS/Spring24/Ilab/cifar10/cifar10",
-        help="Directory where your custom CIFAR-10 dataset is stored",
+        "--data-dir", type=str, default="/Users/harrydo/Downloads/archive-5",
+        help="Directory where your lung cancer dataset is stored",
     )
     
     # Add CUDA argument
@@ -109,10 +108,14 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() and args.use_cuda else "cpu")
 
     # Load the dataset from the specified directory
-    # Load the lung cancer dataset from the specified CSV and image directory
-    train_loader, val_loader, test_loader = utils.load_lung_cancer_data(csv_file="/Users/harrydo/Downloads/archive-5/recurrence.csv", 
-                                                                        image_dir="/Users/harrydo/Downloads/archive-5/ROI/ROI")
-
+    # Load the lung cancer dataset from the train, val, and test CSV and image directory
+    train_loader, val_loader, test_loader = utils.load_lung_cancer_data(
+        train_csv="/Users/harrydo/Documents/UTS/Spring24/Ilab/archive-6/train.csv",  # Path to train.csv
+        val_csv="/Users/harrydo/Documents/UTS/Spring24/Ilab/archive-6/val.csv",      # Path to val.csv
+        test_csv="/Users/harrydo/Documents/UTS/Spring24/Ilab/archive-6/test.csv",    # Path to test.csv
+        image_dir="/Users/harrydo/Documents/UTS/Spring24/Ilab/archive-6/ROI",        # Path to the image directory
+        batch_size=32
+    )
 
     if args.toy:
         # Create subsets of the dataset if the toy flag is used
@@ -122,7 +125,7 @@ def main():
 
     # Start the Flower client
     client = Client(train_loader, val_loader, test_loader, device, args.model)
-    fl.client.start_client(server_address="172.19.113.235:8080", client=client)
+    fl.client.start_client(server_address="192.168.20.3:8080", client=client)
 
 
 if __name__ == "__main__":

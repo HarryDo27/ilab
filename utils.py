@@ -9,43 +9,45 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, random_split
 
 warnings.filterwarnings("ignore")
-import pandas as pd
-import numpy as np
 from PIL import Image
+import pandas as pd
+from torch.utils.data import Dataset, DataLoader
+from torchvision import transforms
 
-class LungCancerDataset(torch.utils.data.Dataset):
+class LungCancerDataset(Dataset):
     def __init__(self, csv_file, image_dir, transform=None):
         """
         Args:
-            csv_file (str): Path to the CSV file with SOPInstanceUID and labels.
-            image_dir (str): Directory with all the images (in .npy format).
+            csv_file (str): Path to the CSV file with image paths and labels.
+            image_dir (str): Directory with all the images (in .tiff format).
             transform (callable, optional): Optional transform to be applied
                 on an image.
         """
         self.data_frame = pd.read_csv(csv_file)
         self.image_dir = image_dir
         self.transform = transform
-        
-        # Filter rows in data_frame where SOPInstanceUID matches files in the image directory
-        available_images = [f.replace('.npy', '') for f in os.listdir(image_dir) if f.endswith('.npy')]
-        self.data_frame = self.data_frame[self.data_frame['SOPInstanceUID'].isin(available_images)]
 
     def __len__(self):
         return len(self.data_frame)
 
     def __getitem__(self, idx):
-        # Load the .npy file using SOPInstanceUID as the filename
         sop_uid = self.data_frame.iloc[idx]['SOPInstanceUID']
-        img_name = os.path.join(self.image_dir, sop_uid + ".npy")
-        image = np.load(img_name)  # Load the .npy file as a NumPy array
 
-        # Convert the NumPy array to a PIL image (or leave it as a tensor if you prefer)
-        image = Image.fromarray(image)
+        # Find the corresponding image file (with _1, _2, etc. suffixes)
+        found_image = None
+        for suffix in range(1, 10):
+            img_name = os.path.join(self.image_dir, f"{sop_uid}_{suffix}.tiff")
+            if os.path.exists(img_name):
+                found_image = img_name
+                break
 
-            # Convert 1-channel grayscale to 3-channel by repeating the array along the third axis
-        image = image.convert("RGB")
+        if found_image is None:
+            raise FileNotFoundError(f"No image found for {sop_uid}")
 
-    # Apply any transforms, if provided
+        # Load the image and convert to RGB (since EfficientNet expects 3-channel input)
+        image = Image.open(found_image).convert('RGB')
+
+        # Apply any transforms
         if self.transform:
             image = self.transform(image)
 
@@ -55,31 +57,30 @@ class LungCancerDataset(torch.utils.data.Dataset):
 
         return image, label
 
-def load_lung_cancer_data(csv_file: str, image_dir: str, batch_size: int = 32):
-    """Load lung cancer recurrence dataset from the specified CSV and image directory."""
 
-    # Define the transformations (resize and normalize based on the needs of your dataset)
+def load_lung_cancer_data(train_csv: str, val_csv: str, test_csv: str, image_dir: str, batch_size: int = 32):
+    """Load lung cancer recurrence dataset from the specified CSV files and image directory."""
+
+    # Define transformations (resize and normalize based on EfficientNet's requirements)
     transform = transforms.Compose([
-        transforms.Resize((224, 224)),  # Adjust this size as per your model's input
+        transforms.Resize((224, 224)),  # Resize to EfficientNet input size
         transforms.ToTensor(),
-        transforms.Normalize((0.5,), (0.5,))  # Adjust normalization if needed
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])  # Normalize based on ImageNet standards
     ])
 
-    # Load the dataset
-    dataset = LungCancerDataset(csv_file=csv_file, image_dir=image_dir, transform=transform)
-
-    # Split the dataset (e.g., 70% train, 15% val, 15% test)
-    train_size = int(0.7 * len(dataset))
-    val_size = int(0.15 * len(dataset))
-    test_size = len(dataset) - train_size - val_size
-    train_set, val_set, test_set = random_split(dataset, [train_size, val_size, test_size])
+    # Load datasets for training, validation, and testing
+    train_set = LungCancerDataset(csv_file=train_csv, image_dir=image_dir, transform=transform)
+    val_set = LungCancerDataset(csv_file=val_csv, image_dir=image_dir, transform=transform)
+    test_set = LungCancerDataset(csv_file=test_csv, image_dir=image_dir, transform=transform)
 
     # Create data loaders for training, validation, and testing
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_set, batch_size=batch_size)
     test_loader = DataLoader(test_set, batch_size=batch_size)
-    
+
     return train_loader, val_loader, test_loader
+
+
 
 
 
