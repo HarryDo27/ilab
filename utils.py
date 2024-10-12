@@ -2,7 +2,7 @@ import warnings
 
 import torch
 from flwr_datasets import FederatedDataset
-from torchvision.models import AlexNet, efficientnet_b0
+from torchvision.models import AlexNet, efficientnet_b0, mobilenet_v3_large
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
 import os
 from torchvision import datasets, transforms
@@ -157,6 +157,23 @@ def load_alexnet(classes: int = 10):
     alexnet = AlexNet(num_classes=classes)
     return alexnet
 
+# Model Loader for MobileNetV3
+def load_mobilenet_v3(classes: int = 10):
+    """Load MobileNetV3 from TorchVision."""
+    mobilenet = mobilenet_v3_large(pretrained=True)
+    
+    # Get the number of input features for the classifier
+    num_features = mobilenet.classifier[0].in_features
+    
+    # Redefine the classifier with a simpler architecture
+    mobilenet.classifier = torch.nn.Sequential(
+        torch.nn.Linear(num_features, 128),
+        torch.nn.ReLU(),
+        torch.nn.Dropout(p=0.5),  # Adjusted dropout rate to 0.5 for regularization
+        torch.nn.Linear(128, classes)  # Output layer matching the number of classes
+    )
+
+    return mobilenet
 
 def get_model_params(model):
     """Returns a model's parameters as a list of NumPy arrays."""

@@ -80,31 +80,33 @@ def main():
     """
 
     # Parse command line argument `partition`
-    parser = argparse.ArgumentParser(description="Flower")
+    parser = argparse.ArgumentParser(description="Flower Server")
     parser.add_argument(
         "--toy",
         action="store_true",
-        help="Set to true to use only 10 datasamples for validation. \
+        help="Set to true to use only 10 data samples for validation. \
             Useful for testing purposes. Default: False",
     )
     parser.add_argument(
         "--model",
         type=str,
-        default="efficientnet",
-        choices=["efficientnet", "alexnet"],
-        help="Use either EfficientNet or AlexNet models. \
+        default="mobilenet",
+        choices=["efficientnet", "alexnet", "mobilenet"],
+        help="Use either EfficientNet, AlexNet, or MobileNetV3 models. \
              If you want to achieve differential privacy, please use the AlexNet model",
     )
 
     args = parser.parse_args()
 
-    # Load the selected model
+    # Load the selected model based on the argument passed
     if args.model == "alexnet":
         model = utils.load_alexnet(classes=10)
+    elif args.model == "mobilenet":
+        model = utils.load_mobilenet_v3(classes=10)
     else:
         model = utils.load_efficientnet(classes=10)
 
-    # Initialize model parameters
+    # Initialize model parameters for Flower
     model_parameters = [val.cpu().numpy() for _, val in model.state_dict().items()]
 
     print('Initializing strategy')
@@ -116,7 +118,7 @@ def main():
         min_fit_clients=2,
         min_evaluate_clients=2,
         min_available_clients=2,
-        evaluate_fn=get_evaluate_fn(model, args.toy),
+        evaluate_fn=get_evaluate_fn(model, args.model == "mobilenet"),
         on_fit_config_fn=fit_config,
         on_evaluate_config_fn=evaluate_config,
         initial_parameters=fl.common.ndarrays_to_parameters(model_parameters)
