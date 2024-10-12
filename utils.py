@@ -1,7 +1,7 @@
 import warnings
 
 import torch
-from flwr_datasets import FederatedDataset
+# from flwr_datasets import FederatedDataset
 from torchvision.models import AlexNet, efficientnet_b0, mobilenet_v3_large
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
 import os
@@ -61,15 +61,39 @@ class LungCancerDataset(Dataset):
 def load_lung_cancer_data(train_csv: str, val_csv: str, test_csv: str, image_dir: str, batch_size: int = 32):
     """Load lung cancer recurrence dataset from the specified CSV files and image directory."""
 
-    # Define transformations (resize and normalize based on EfficientNet's requirements)
-    transform = transforms.Compose([
-        transforms.Resize((224, 224)),  # Resize to EfficientNet input size
+    # # Define transformations (resize and normalize based on EfficientNet's requirements)
+    # transform = transforms.Compose([
+    #     transforms.Resize((224, 224)),  # Resize to EfficientNet input size
+    #     transforms.ToTensor(),
+    #     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])  # Normalize based on ImageNet standards
+    # ])
+
+    image_size = 224
+
+    # Advanced and balanced training transformations
+    train_transform = transforms.Compose([
+        transforms.RandomResizedCrop(image_size, scale=(0.8, 1.0)),
+        transforms.RandomHorizontalFlip(p=0.5),
+        transforms.RandomVerticalFlip(p=0.2),
+        transforms.RandomRotation(20),  # Reduced rotation degree
+        transforms.ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1, hue=0.05),  # Subtle color changes
+        transforms.RandomGrayscale(p=0.05),  # Lower probability of converting to grayscale
+        transforms.RandomPerspective(distortion_scale=0.2, p=0.5),  # Adds perspective distortion
+        transforms.RandomAffine(degrees=0, translate=(0.1, 0.1)),  # Introduces slight translation
+        transforms.GaussianBlur(kernel_size=3, sigma=(0.1, 2.0)),  # Adds slight blur for robustness
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])  # Normalize based on ImageNet standards
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),  # Standard normalization
+    ])
+
+    # Transformations for validation and test sets
+    transform = transforms.Compose([
+        transforms.Resize((image_size, image_size)),  # Resize to the target size
+        transforms.ToTensor(),  # Convert the image to a tensor
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),  # Normalize the image
     ])
 
     # Load datasets for training, validation, and testing
-    train_set = LungCancerDataset(csv_file=train_csv, image_dir=image_dir, transform=transform)
+    train_set = LungCancerDataset(csv_file=train_csv, image_dir=image_dir, transform=train_transform)
     val_set = LungCancerDataset(csv_file=val_csv, image_dir=image_dir, transform=transform)
     test_set = LungCancerDataset(csv_file=test_csv, image_dir=image_dir, transform=transform)
 
@@ -82,40 +106,38 @@ def load_lung_cancer_data(train_csv: str, val_csv: str, test_csv: str, image_dir
 
 
 
+# def train(
+#     net, trainloader, valloader, epochs, device: torch.device = torch.device("cpu")
+# ):
+#     """Train the network on the training set."""
+#     print("Starting training...")
+#     net.to(device)  # move model to GPU if available
+#     criterion = torch.nn.CrossEntropyLoss().to(device)
+#     optimizer = torch.optim.SGD(
+#         net.parameters(), lr=0.001, momentum=0.9, weight_decay=1e-4
+#     )
+#     net.train()
+#     for _ in range(epochs):
+#         for images, labels in trainloader:  # No need for batch["img"] / batch["label"]
+#             images, labels = images.to(device), labels.to(device)
+#             optimizer.zero_grad()
+#             loss = criterion(net(images), labels)
+#             loss.backward()
+#             optimizer.step()
 
+#     net.to("cpu")  # move model back to CPU
 
-def train(
-    net, trainloader, valloader, epochs, device: torch.device = torch.device("cpu")
-):
-    """Train the network on the training set."""
-    print("Starting training...")
-    net.to(device)  # move model to GPU if available
-    criterion = torch.nn.CrossEntropyLoss().to(device)
-    optimizer = torch.optim.SGD(
-        net.parameters(), lr=0.001, momentum=0.9, weight_decay=1e-4
-    )
-    net.train()
-    for _ in range(epochs):
-        for images, labels in trainloader:  # No need for batch["img"] / batch["label"]
-            images, labels = images.to(device), labels.to(device)
-            optimizer.zero_grad()
-            loss = criterion(net(images), labels)
-            loss.backward()
-            optimizer.step()
+#     # Compute train and validation loss/accuracy after training
+#     train_loss, train_acc = test(net, trainloader, device=device)
+#     val_loss, val_acc = test(net, valloader, device=device)
 
-    net.to("cpu")  # move model back to CPU
-
-    # Compute train and validation loss/accuracy after training
-    train_loss, train_acc = test(net, trainloader, device=device)
-    val_loss, val_acc = test(net, valloader, device=device)
-
-    results = {
-        "train_loss": train_loss,
-        "train_accuracy": train_acc,
-        "val_loss": val_loss,
-        "val_accuracy": val_acc,
-    }
-    return results
+#     results = {
+#         "train_loss": train_loss,
+#         "train_accuracy": train_acc,
+#         "val_loss": val_loss,
+#         "val_accuracy": val_acc,
+#     }
+#     return results
 
 
 
@@ -123,22 +145,35 @@ def test(
     net, testloader, steps: int = None, device: torch.device = torch.device("cpu")
 ):
     """Validate the network on the test set."""
-    print("Starting evaluation...")
+    print("Starting evaluation in local client ...")
+
     net.to(device)  # move model to GPU if available
+    
     criterion = torch.nn.CrossEntropyLoss()
     correct, loss = 0, 0.0
     net.eval()
+    
     with torch.no_grad():
         for batch_idx, (images, labels) in enumerate(testloader):  # Tuple unpacking
             images, labels = images.to(device), labels.to(device)
+            
             outputs = net(images)
-            loss += criterion(outputs, labels).item()
+            
+            # multiple with batch size
+            loss += criterion(outputs, labels).item() * images.size(0)
+            
             _, predicted = torch.max(outputs.data, 1)
+            
             correct += (predicted == labels).sum().item()
+            
             if steps is not None and batch_idx == steps:
                 break
+    
+    # Calculate epoch-wise loss
+    loss = loss / len(testloader.dataset)
+
     accuracy = correct / len(testloader.dataset)
-    net.to("cpu")  # move model back to CPU
+    # net.to("cpu")  # move model back to CPU
     return loss, accuracy
 
 

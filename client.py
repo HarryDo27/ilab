@@ -61,6 +61,7 @@ class Client(fl.client.NumPyClient):
 
     def train(self, train_loader, val_loader, num_epochs):
         """Train the model and apply the scheduler."""
+
         for epoch in range(num_epochs):
             self.model.train()
             running_loss = 0.0
@@ -85,6 +86,7 @@ class Client(fl.client.NumPyClient):
         # After training, return the validation loss and accuracy
         train_loss, train_acc = utils.test(self.model, train_loader, device=self.device)
         val_loss, val_acc = utils.test(self.model, val_loader, device=self.device)
+
         return {
             "train_loss": train_loss,
             "train_accuracy": train_acc,
@@ -110,7 +112,7 @@ def main():
     parser = argparse.ArgumentParser(description="Flower Client")
     parser.add_argument("--client-id", type=int, default=0, help="Client ID for partitioning purposes")
     parser.add_argument("--toy", action="store_true", help="Use only a small dataset for quick testing.")
-    parser.add_argument("--data-dir", type=str, default="/Users/harrydo/Documents/UTS/Spring24/Ilab/NSCLC", help="Directory where the dataset is stored")
+    parser.add_argument("--data-dir", type=str, default="dataset", help="Directory where the dataset is stored")
     parser.add_argument("--use_cuda", action="store_true", help="Use GPU if available")
     parser.add_argument("--model", type=str, default="mobilenet", choices=["mobilenet", "efficientnet", "alexnet"],
                         help="Model architecture to use (Mobilenet, EfficientNet, or AlexNet)")
@@ -118,7 +120,8 @@ def main():
     args = parser.parse_args()
 
     # Set the device
-    device = torch.device("cuda" if torch.cuda.is_available() and args.use_cuda else "cpu")
+    # device = torch.device("cuda" if torch.cuda.is_available() and args.use_cuda else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load the lung cancer dataset
     train_loader, val_loader, test_loader = utils.load_lung_cancer_data(
@@ -137,7 +140,7 @@ def main():
 
     # Initialize the client and start Flower
     client = Client(train_loader, val_loader, test_loader, device, args.model)
-    fl.client.start_client(server_address="192.168.20.3:8080", client=client)
+    fl.client.start_client(server_address="192.168.55.111:8080", client=client)
 
 
 if __name__ == "__main__":

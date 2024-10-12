@@ -1,0 +1,273 @@
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=20, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (20 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:flwr:configure_fit: strategy sampled 2 clients (out of 2)
+INFO:flwr:aggregate_fit: received 2 results and 0 failures
+INFO:root:Round 1
+INFO:root:Client 0: Train Loss: 0.589 	 Train Acc: 0.719 	 Val Loss: 0.745 	 Val Acc: 0.552
+INFO:root:Client 1: Train Loss: 0.567 	 Train Acc: 0.721 	 Val Loss: 0.635 	 Val Acc: 0.759
+INFO:root:Aggregated: Average Loss: 0.69 	 Average Accuracy: 0.655
+
+WARNING:flwr:No fit_metrics_aggregation_fn provided
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+WARNING:flwr:No evaluate_metrics_aggregation_fn provided
+INFO:flwr:
+INFO:flwr:[ROUND 2]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 2
+INFO:root:Client 0: Train Loss: 1.013 	 Train Acc: 0.777 	 Val Loss: 1.595 	 Val Acc: 0.69
+INFO:root:Client 1: Train Loss: 0.665 	 Train Acc: 0.747 	 Val Loss: 0.685 	 Val Acc: 0.724
+INFO:root:Client 2: Train Loss: 1.147 	 Train Acc: 0.76 	 Val Loss: 3.224 	 Val Acc: 0.759
+INFO:root:Aggregated: Average Loss: 1.835 	 Average Accuracy: 0.724
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 3]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 3
+INFO:root:Client 0: Train Loss: 1.137 	 Train Acc: 0.712 	 Val Loss: 2.852 	 Val Acc: 0.586
+INFO:root:Client 1: Train Loss: 0.658 	 Train Acc: 0.819 	 Val Loss: 2.285 	 Val Acc: 0.483
+INFO:root:Client 2: Train Loss: 0.689 	 Train Acc: 0.833 	 Val Loss: 2.841 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.659 	 Average Accuracy: 0.563
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 4]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 4
+INFO:root:Client 0: Train Loss: 0.473 	 Train Acc: 0.853 	 Val Loss: 2.072 	 Val Acc: 0.69
+INFO:root:Client 1: Train Loss: 0.914 	 Train Acc: 0.812 	 Val Loss: 4.889 	 Val Acc: 0.724
+INFO:root:Client 2: Train Loss: 0.948 	 Train Acc: 0.844 	 Val Loss: 3.467 	 Val Acc: 0.69
+INFO:root:Aggregated: Average Loss: 3.476 	 Average Accuracy: 0.701
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 5]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 5
+INFO:root:Client 0: Train Loss: 0.271 	 Train Acc: 0.909 	 Val Loss: 4.684 	 Val Acc: 0.655
+INFO:root:Client 1: Train Loss: 0.204 	 Train Acc: 0.93 	 Val Loss: 3.353 	 Val Acc: 0.69
+INFO:root:Client 2: Train Loss: 0.961 	 Train Acc: 0.837 	 Val Loss: 4.823 	 Val Acc: 0.69
+INFO:root:Aggregated: Average Loss: 4.287 	 Average Accuracy: 0.678
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 6]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 6
+INFO:root:Client 0: Train Loss: 0.281 	 Train Acc: 0.9 	 Val Loss: 3.432 	 Val Acc: 0.69
+INFO:root:Client 1: Train Loss: 0.089 	 Train Acc: 0.97 	 Val Loss: 3.444 	 Val Acc: 0.655
+INFO:root:Client 2: Train Loss: 0.048 	 Train Acc: 0.979 	 Val Loss: 3.474 	 Val Acc: 0.655
+INFO:root:Aggregated: Average Loss: 3.45 	 Average Accuracy: 0.667
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 7]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 7
+INFO:root:Client 0: Train Loss: 0.037 	 Train Acc: 0.988 	 Val Loss: 3.106 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.041 	 Train Acc: 0.986 	 Val Loss: 3.143 	 Val Acc: 0.655
+INFO:root:Client 2: Train Loss: 0.042 	 Train Acc: 0.984 	 Val Loss: 3.075 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 3.108 	 Average Accuracy: 0.632
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 8]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 8
+INFO:root:Client 0: Train Loss: 0.048 	 Train Acc: 0.977 	 Val Loss: 2.669 	 Val Acc: 0.655
+INFO:root:Client 1: Train Loss: 0.015 	 Train Acc: 0.995 	 Val Loss: 2.606 	 Val Acc: 0.655
+INFO:root:Client 2: Train Loss: 0.025 	 Train Acc: 0.988 	 Val Loss: 2.802 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.693 	 Average Accuracy: 0.644
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 9]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 9
+INFO:root:Client 0: Train Loss: 0.025 	 Train Acc: 0.988 	 Val Loss: 2.523 	 Val Acc: 0.655
+INFO:root:Client 1: Train Loss: 0.015 	 Train Acc: 0.995 	 Val Loss: 2.654 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.014 	 Train Acc: 0.995 	 Val Loss: 2.491 	 Val Acc: 0.655
+INFO:root:Aggregated: Average Loss: 2.556 	 Average Accuracy: 0.644
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 10]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 10
+INFO:root:Client 0: Train Loss: 0.01 	 Train Acc: 0.998 	 Val Loss: 2.396 	 Val Acc: 0.655
+INFO:root:Client 1: Train Loss: 0.013 	 Train Acc: 0.998 	 Val Loss: 2.407 	 Val Acc: 0.655
+INFO:root:Client 2: Train Loss: 0.011 	 Train Acc: 0.998 	 Val Loss: 2.413 	 Val Acc: 0.655
+INFO:root:Aggregated: Average Loss: 2.405 	 Average Accuracy: 0.655
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 11]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 11
+INFO:root:Client 0: Train Loss: 0.021 	 Train Acc: 0.988 	 Val Loss: 2.317 	 Val Acc: 0.655
+INFO:root:Client 1: Train Loss: 0.012 	 Train Acc: 0.998 	 Val Loss: 2.298 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.014 	 Train Acc: 0.995 	 Val Loss: 2.307 	 Val Acc: 0.655
+INFO:root:Aggregated: Average Loss: 2.308 	 Average Accuracy: 0.644
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 12]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 12
+INFO:root:Client 0: Train Loss: 0.012 	 Train Acc: 1.0 	 Val Loss: 2.235 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.011 	 Train Acc: 0.998 	 Val Loss: 2.238 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.015 	 Train Acc: 0.995 	 Val Loss: 2.227 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.233 	 Average Accuracy: 0.621
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 13]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 13
+INFO:root:Client 0: Train Loss: 0.017 	 Train Acc: 0.993 	 Val Loss: 2.176 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.015 	 Train Acc: 0.998 	 Val Loss: 2.181 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.014 	 Train Acc: 0.995 	 Val Loss: 2.172 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.176 	 Average Accuracy: 0.621
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 14]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 14
+INFO:root:Client 0: Train Loss: 0.019 	 Train Acc: 0.995 	 Val Loss: 2.142 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.012 	 Train Acc: 0.998 	 Val Loss: 2.143 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.014 	 Train Acc: 0.995 	 Val Loss: 2.141 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.142 	 Average Accuracy: 0.621
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 15]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 15
+INFO:root:Client 0: Train Loss: 0.01 	 Train Acc: 1.0 	 Val Loss: 2.113 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.011 	 Train Acc: 0.998 	 Val Loss: 2.109 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.009 	 Train Acc: 1.0 	 Val Loss: 2.115 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.113 	 Average Accuracy: 0.621
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 16]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 16
+INFO:root:Client 0: Train Loss: 0.016 	 Train Acc: 0.993 	 Val Loss: 2.098 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.013 	 Train Acc: 0.995 	 Val Loss: 2.102 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.017 	 Train Acc: 0.995 	 Val Loss: 2.088 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.096 	 Average Accuracy: 0.621
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 17]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 17
+INFO:root:Client 0: Train Loss: 0.01 	 Train Acc: 0.998 	 Val Loss: 2.086 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.011 	 Train Acc: 1.0 	 Val Loss: 2.082 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.011 	 Train Acc: 0.998 	 Val Loss: 2.092 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.087 	 Average Accuracy: 0.621
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 18]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 18
+INFO:root:Client 0: Train Loss: 0.009 	 Train Acc: 1.0 	 Val Loss: 2.078 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.008 	 Train Acc: 1.0 	 Val Loss: 2.093 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.012 	 Train Acc: 0.993 	 Val Loss: 2.074 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.082 	 Average Accuracy: 0.621
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 19]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 19
+INFO:root:Client 0: Train Loss: 0.007 	 Train Acc: 0.998 	 Val Loss: 2.078 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.011 	 Train Acc: 0.998 	 Val Loss: 2.079 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.01 	 Train Acc: 1.0 	 Val Loss: 2.083 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.08 	 Average Accuracy: 0.621
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 20]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 20
+INFO:root:Client 0: Train Loss: 0.011 	 Train Acc: 0.995 	 Val Loss: 2.068 	 Val Acc: 0.621
+INFO:root:Client 1: Train Loss: 0.006 	 Train Acc: 1.0 	 Val Loss: 2.085 	 Val Acc: 0.621
+INFO:root:Client 2: Train Loss: 0.008 	 Train Acc: 1.0 	 Val Loss: 2.072 	 Val Acc: 0.621
+INFO:root:Aggregated: Average Loss: 2.075 	 Average Accuracy: 0.621
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[SUMMARY]
+INFO:flwr:Run finished 20 round(s) in 989.85s
+INFO:flwr:	History (loss, distributed):
+INFO:flwr:		round 1: 0.9055193662643433
+INFO:flwr:		round 2: 0.8697431683540344
+INFO:flwr:		round 3: 1.6882038116455078
+INFO:flwr:		round 4: 2.3277130126953125
+INFO:flwr:		round 5: 2.415931463241577
+INFO:flwr:		round 6: 2.1841330528259277
+INFO:flwr:		round 7: 1.7185388803482056
+INFO:flwr:		round 8: 1.5807305574417114
+INFO:flwr:		round 9: 1.5400359630584717
+INFO:flwr:		round 10: 1.490916132926941
+INFO:flwr:		round 11: 1.449815273284912
+INFO:flwr:		round 12: 1.4282612800598145
+INFO:flwr:		round 13: 1.420713186264038
+INFO:flwr:		round 14: 1.4162970781326294
+INFO:flwr:		round 15: 1.4145325422286987
+INFO:flwr:		round 16: 1.4202085733413696
+INFO:flwr:		round 17: 1.429610252380371
+INFO:flwr:		round 18: 1.4360182285308838
+INFO:flwr:		round 19: 1.449705958366394
+INFO:flwr:		round 20: 1.4561915397644043
+INFO:flwr:

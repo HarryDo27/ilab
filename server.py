@@ -6,9 +6,11 @@ from typing import Dict, Optional, Tuple
 import flwr as fl
 import torch
 import utils
+import logging
 
 warnings.filterwarnings("ignore")
 
+logger = logging.getLogger(__name__)
 
 def fit_config(server_round: int):
     """Return training configuration dict for each round.
@@ -17,7 +19,7 @@ def fit_config(server_round: int):
     increase to two local epochs afterwards.
     """
     config = {
-        "batch_size": 16,
+        "batch_size": 64,
         "local_epochs": 1 if server_round < 2 else 2,
     }
     return config
@@ -49,14 +51,21 @@ class CustomFedAvg(fl.server.strategy.FedAvg):
         total_loss = 0
         total_accuracy = 0
         total_samples = 0
+
+        # log data into file
+        logging.info(f"Round {rnd}")
         
         for i, (client, fit_res) in enumerate(results):
             # Extract client-side metrics
             val_loss = fit_res.metrics.get("val_loss")
             val_accuracy = fit_res.metrics.get("val_accuracy")
+            train_loss = fit_res.metrics.get("train_loss")
+            train_accuracy = fit_res.metrics.get("train_accuracy")
             num_examples = fit_res.num_examples
             
             print(f"Client {i} - Loss: {val_loss}, Accuracy: {val_accuracy}")
+
+            logging.info(f"Client {i}: Train Loss: {round(train_loss, 3)} \t Train Acc: {round(train_accuracy, 3)} \t Val Loss: {round(val_loss, 3)} \t Val Acc: {round(val_accuracy, 3)}")
             
             # Aggregate results across clients
             total_loss += val_loss * num_examples
@@ -68,6 +77,8 @@ class CustomFedAvg(fl.server.strategy.FedAvg):
         avg_accuracy = total_accuracy / total_samples if total_samples > 0 else 0
         
         print(f"Aggregated - Loss: {avg_loss}, Accuracy: {avg_accuracy}")
+
+        logging.info(f"Aggregated: Average Loss: {round(avg_loss, 3)} \t Average Accuracy: {round(avg_accuracy, 3)}\n")
         
         # Return the aggregated loss and accuracy
         return super().aggregate_fit(rnd, results, failures)
@@ -78,9 +89,15 @@ def main():
     1. server-side parameter initialization
     2. server-side parameter evaluation
     """
+    
+    # init logging file
+    logging.basicConfig(filename='agg_loss_track.log', level=logging.INFO)
+    logging.info('Tracking Loss and Model Performance')
+
 
     # Parse command line argument `partition`
     parser = argparse.ArgumentParser(description="Flower Server")
+
     parser.add_argument(
         "--toy",
         action="store_true",
@@ -128,8 +145,8 @@ def main():
 
     # Start Flower server for four rounds of federated learning
     fl.server.start_server(
-        server_address="192.168.20.3:8080",
-        config=fl.server.ServerConfig(num_rounds=4),
+        server_address="192.168.55.111:8080",
+        config=fl.server.ServerConfig(num_rounds=20),
         strategy=strategy,
     )
 
