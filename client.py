@@ -7,6 +7,7 @@ import torch.optim as optim
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import flwr as fl
 import utils  # Assuming utils has the functions for loading datasets and models
+from IPython import embed
 
 warnings.filterwarnings("ignore")
 

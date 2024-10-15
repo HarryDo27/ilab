@@ -104,8 +104,6 @@ def load_lung_cancer_data(train_csv: str, val_csv: str, test_csv: str, image_dir
 
     return train_loader, val_loader, test_loader
 
-
-
 # def train(
 #     net, trainloader, valloader, epochs, device: torch.device = torch.device("cpu")
 # ):
