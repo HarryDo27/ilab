@@ -61,16 +61,16 @@ def split_data_client_wise(train_csv, val_csv, test_csv, img_dir, n_clients, sav
 
     for idx, sopuids in enumerate(client_train_sopuids):
         for id in sopuids:
-            sopuids_to_cids[id] = idx+1
+            sopuids_to_cids[id] = idx
     
     for idx, sopuids in enumerate(client_val_sopuids):
         for id in sopuids:
-            sopuids_to_cids[id] = idx+1
+            sopuids_to_cids[id] = idx
 
     df_train['client_id'] = df_train['SOPInstanceUID'].map(sopuids_to_cids)
     df_val['client_id'] = df_val['SOPInstanceUID'].map(sopuids_to_cids)
 
-    for id in range(1, n_clients+1):
+    for id in range(n_clients):
         df_train_client = df_train[df_train.client_id == id].drop(columns=['client_id'])
         df_val_client = df_val[df_val.client_id == id].drop(columns=['client_id'])
 

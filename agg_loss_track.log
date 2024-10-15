@@ -271,3 +271,133 @@ INFO:flwr:		round 18: 1.4360182285308838
 INFO:flwr:		round 19: 1.449705958366394
 INFO:flwr:		round 20: 1.4561915397644043
 INFO:flwr:
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=20, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (20 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:flwr:configure_fit: strategy sampled 2 clients (out of 2)
+INFO:flwr:aggregate_fit: received 2 results and 0 failures
+INFO:root:Round 1
+INFO:root:Client 0: Train Loss: 0.938 	 Train Acc: 0.724 	 Val Loss: 1.313 	 Val Acc: 0.8
+INFO:root:Client 1: Train Loss: 1.122 	 Train Acc: 0.714 	 Val Loss: 1.689 	 Val Acc: 0.778
+INFO:root:Aggregated: Average Loss: 1.498 	 Average Accuracy: 0.789
+
+WARNING:flwr:No fit_metrics_aggregation_fn provided
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+WARNING:flwr:No evaluate_metrics_aggregation_fn provided
+INFO:flwr:
+INFO:flwr:[ROUND 2]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 2
+INFO:root:Client 0: Train Loss: 0.668 	 Train Acc: 0.731 	 Val Loss: 0.721 	 Val Acc: 0.8
+INFO:root:Client 1: Train Loss: 0.537 	 Train Acc: 0.843 	 Val Loss: 0.642 	 Val Acc: 0.778
+INFO:root:Client 2: Train Loss: 0.67 	 Train Acc: 0.772 	 Val Loss: 0.807 	 Val Acc: 0.7
+INFO:root:Aggregated: Average Loss: 0.724 	 Average Accuracy: 0.759
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 3]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=20, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (20 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:flwr:configure_fit: strategy sampled 2 clients (out of 2)
+INFO:flwr:aggregate_fit: received 2 results and 0 failures
+INFO:root:Round 1
+INFO:root:Client 0: Train Loss: 1.061 	 Train Acc: 0.714 	 Val Loss: 1.872 	 Val Acc: 0.667
+INFO:root:Client 1: Train Loss: 1.325 	 Train Acc: 0.71 	 Val Loss: 2.298 	 Val Acc: 0.4
+INFO:root:Aggregated: Average Loss: 2.089 	 Average Accuracy: 0.531
+
+WARNING:flwr:No fit_metrics_aggregation_fn provided
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+WARNING:flwr:No evaluate_metrics_aggregation_fn provided
+INFO:flwr:
+INFO:flwr:[ROUND 2]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 2
+INFO:root:Client 0: Train Loss: 0.485 	 Train Acc: 0.771 	 Val Loss: 0.576 	 Val Acc: 0.778
+INFO:root:Client 1: Train Loss: 0.664 	 Train Acc: 0.607 	 Val Loss: 0.936 	 Val Acc: 0.4
+INFO:root:Client 2: Train Loss: 0.634 	 Train Acc: 0.731 	 Val Loss: 1.326 	 Val Acc: 0.8
+INFO:root:Aggregated: Average Loss: 0.95 	 Average Accuracy: 0.658
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 3]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 3
+INFO:root:Client 0: Train Loss: 0.436 	 Train Acc: 0.766 	 Val Loss: 0.596 	 Val Acc: 0.7
+INFO:root:Client 1: Train Loss: 0.6 	 Train Acc: 0.752 	 Val Loss: 1.446 	 Val Acc: 0.8
+INFO:root:Client 2: Train Loss: 0.389 	 Train Acc: 0.85 	 Val Loss: 0.552 	 Val Acc: 0.667
+INFO:root:Aggregated: Average Loss: 0.869 	 Average Accuracy: 0.723
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 4]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 4
+INFO:root:Client 0: Train Loss: 0.273 	 Train Acc: 0.869 	 Val Loss: 0.924 	 Val Acc: 0.7
+INFO:root:Client 1: Train Loss: 0.505 	 Train Acc: 0.829 	 Val Loss: 1.211 	 Val Acc: 0.667
+INFO:root:Client 2: Train Loss: 0.569 	 Train Acc: 0.745 	 Val Loss: 0.856 	 Val Acc: 0.6
+INFO:root:Aggregated: Average Loss: 0.995 	 Average Accuracy: 0.655
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 5]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=20, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (20 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 1
+INFO:root:Client 0: Train Loss: 1.095 	 Train Acc: 0.714 	 Val Loss: 1.226 	 Val Acc: 0.778
+INFO:root:Client 1: Train Loss: 1.733 	 Train Acc: 0.71 	 Val Loss: 2.079 	 Val Acc: 0.5
+INFO:root:Client 2: Train Loss: 1.083 	 Train Acc: 0.793 	 Val Loss: 1.516 	 Val Acc: 0.8
+INFO:root:Aggregated: Average Loss: 1.611 	 Average Accuracy: 0.692
+
+WARNING:flwr:No fit_metrics_aggregation_fn provided
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+WARNING:flwr:No evaluate_metrics_aggregation_fn provided
+INFO:flwr:
+INFO:flwr:[ROUND 2]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:root:Round 2
+INFO:root:Client 0: Train Loss: 0.624 	 Train Acc: 0.736 	 Val Loss: 0.629 	 Val Acc: 0.778
+INFO:root:Client 1: Train Loss: 0.505 	 Train Acc: 0.786 	 Val Loss: 0.627 	 Val Acc: 0.8
+INFO:root:Client 2: Train Loss: 0.681 	 Train Acc: 0.821 	 Val Loss: 1.18 	 Val Acc: 0.4
+INFO:root:Aggregated: Average Loss: 0.814 	 Average Accuracy: 0.658
+
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 3]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)

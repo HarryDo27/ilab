@@ -117,6 +117,7 @@ def main():
     parser.add_argument("--use_cuda", action="store_true", help="Use GPU if available")
     parser.add_argument("--model", type=str, default="mobilenet", choices=["mobilenet", "efficientnet", "alexnet"],
                         help="Model architecture to use (Mobilenet, EfficientNet, or AlexNet)")
+    parser.add_argument("--data-client-root", type=str, default="dataset/data_clients")
 
     args = parser.parse_args()
 
@@ -124,10 +125,18 @@ def main():
     # device = torch.device("cuda" if torch.cuda.is_available() and args.use_cuda else "cpu")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # Load the lung cancer dataset
+    # # Load the lung cancer dataset
+    # train_loader, val_loader, test_loader = utils.load_lung_cancer_data(
+    #     train_csv=f"{args.data_dir}/train.csv",
+    #     val_csv=f"{args.data_dir}/val.csv",
+    #     test_csv=f"{args.data_dir}/test.csv",
+    #     image_dir=f"{args.data_dir}/ROI",
+    #     batch_size=32
+    # )
+
     train_loader, val_loader, test_loader = utils.load_lung_cancer_data(
-        train_csv=f"{args.data_dir}/train.csv",
-        val_csv=f"{args.data_dir}/val.csv",
+        train_csv=f"{args.data_client_root}/client_{args.client_id}_train.csv",
+        val_csv=f"{args.data_client_root}/client_{args.client_id}_val.csv",
         test_csv=f"{args.data_dir}/test.csv",
         image_dir=f"{args.data_dir}/ROI",
         batch_size=32
