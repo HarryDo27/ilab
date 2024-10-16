@@ -484,3 +484,15 @@ INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
 INFO:flwr:
 INFO:flwr:[ROUND 9]
 INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 10]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 11]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
