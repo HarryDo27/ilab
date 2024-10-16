@@ -401,3 +401,86 @@ INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
 INFO:flwr:
 INFO:flwr:[ROUND 3]
 INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=20, no round_timeout
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=20, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (20 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=20, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (20 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 1 results and 2 failures
+WARNING:flwr:No fit_metrics_aggregation_fn provided
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=20, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (20 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+WARNING:flwr:No fit_metrics_aggregation_fn provided
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+WARNING:flwr:No evaluate_metrics_aggregation_fn provided
+INFO:flwr:
+INFO:flwr:[ROUND 2]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 3]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 4]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 5]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 6]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 7]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 8]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_fit: received 3 results and 0 failures
+INFO:flwr:configure_evaluate: strategy sampled 3 clients (out of 3)
+INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
+INFO:flwr:
+INFO:flwr:[ROUND 9]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)

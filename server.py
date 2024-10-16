@@ -41,47 +41,36 @@ def get_evaluate_fn(model: torch.nn.Module, toy: bool):
 
 
 class CustomFedAvg(fl.server.strategy.FedAvg):
-    def aggregate_fit(
-        self, rnd: int, results, failures
-    ):
+    def aggregate_fit(self, rnd: int, results, failures):
         """Aggregate fit results and print client results."""
         print(f"Round {rnd} - Results from clients:")
         
-        # Aggregate loss and accuracy across all clients
-        total_loss = 0
-        total_accuracy = 0
+        total_loss, total_accuracy, total_precision, total_recall = 0, 0, 0, 0
         total_samples = 0
 
-        # log data into file
-        logging.info(f"Round {rnd}")
-        
         for i, (client, fit_res) in enumerate(results):
-            # Extract client-side metrics
             val_loss = fit_res.metrics.get("val_loss")
             val_accuracy = fit_res.metrics.get("val_accuracy")
-            train_loss = fit_res.metrics.get("train_loss")
-            train_accuracy = fit_res.metrics.get("train_accuracy")
+            val_precision = fit_res.metrics.get("val_precision")
+            val_recall = fit_res.metrics.get("val_recall")
             num_examples = fit_res.num_examples
             
-            print(f"Client {i} - Loss: {val_loss}, Accuracy: {val_accuracy}")
+            print(f"Client {i} - Loss: {val_loss}, Accuracy: {val_accuracy}, Precision: {val_precision}, Recall: {val_recall}")
 
-            logging.info(f"Client {i}: Train Loss: {round(train_loss, 3)} \t Train Acc: {round(train_accuracy, 3)} \t Val Loss: {round(val_loss, 3)} \t Val Acc: {round(val_accuracy, 3)}")
-            
-            # Aggregate results across clients
             total_loss += val_loss * num_examples
             total_accuracy += val_accuracy * num_examples
+            total_precision += val_precision * num_examples
+            total_recall += val_recall * num_examples
             total_samples += num_examples
-        
-        # Calculate average loss and accuracy across all clients
+
         avg_loss = total_loss / total_samples if total_samples > 0 else 0
         avg_accuracy = total_accuracy / total_samples if total_samples > 0 else 0
-        
-        print(f"Aggregated - Loss: {avg_loss}, Accuracy: {avg_accuracy}")
+        avg_precision = total_precision / total_samples if total_samples > 0 else 0
+        avg_recall = total_recall / total_samples if total_samples > 0 else 0
 
-        logging.info(f"Aggregated: Average Loss: {round(avg_loss, 3)} \t Average Accuracy: {round(avg_accuracy, 3)}\n")
-        
-        # Return the aggregated loss and accuracy
+        print(f"Aggregated - Loss: {avg_loss}, Accuracy: {avg_accuracy}, Precision: {avg_precision}, Recall: {avg_recall}")
         return super().aggregate_fit(rnd, results, failures)
+
 
 
 def main():
@@ -145,7 +134,7 @@ def main():
 
     # Start Flower server for four rounds of federated learning
     fl.server.start_server(
-        server_address="192.168.55.111:8080",
+        server_address="172.19.69.20:8080",
         config=fl.server.ServerConfig(num_rounds=20),
         strategy=strategy,
     )
