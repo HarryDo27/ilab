@@ -10,8 +10,8 @@ warnings.filterwarnings("ignore")
 def fit_config(server_round: int):
     """Return training configuration dict for each round."""
     config = {
-        "batch_size": 32,  # Ensure that batch_size is defined
-        "local_epochs": 10,
+        "batch_size": 32,
+        "local_epochs": 10,  # Set to 10 epochs per round
     }
     return config
 
@@ -24,7 +24,7 @@ class CustomFedAvg(fl.server.strategy.FedAvg):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.best_f1_score = 0
-        self.best_parameters = None
+        self.best_model_path = "best_model.pth"
         self.history = []
         self.best_round = None
 
@@ -64,8 +64,11 @@ class CustomFedAvg(fl.server.strategy.FedAvg):
         # Save the best model based on F1 score
         if avg_f1 > self.best_f1_score:
             self.best_f1_score = avg_f1
-            self.best_parameters = results[0][1].parameters
             self.best_round = rnd
+
+            # Save the model state_dict to a file
+            print(f"New best model found at round {rnd} with F1 Score: {avg_f1:.4f}. Saving model...")
+            torch.save(results[0][1].parameters, self.best_model_path)
 
         # Save metrics to history for visualization later
         self.history.append({
@@ -119,33 +122,6 @@ class CustomFedAvg(fl.server.strategy.FedAvg):
         plt.tight_layout()
         plt.show()
 
-    def evaluate_best_on_test(self, test_loader):
-        """Evaluate the best model based on validation F1 score on the test set."""
-        if self.best_parameters is None:
-            print("No best model found.")
-            return
-        
-        # Create the model and set its parameters
-        model = utils.load_mobilenet_v3(classes=10)  # Adjust based on your architecture
-        model.load_state_dict(torch.load(self.best_parameters))
-        model.eval()
-        
-        # Evaluate on the test set
-        with torch.no_grad():
-            all_preds = []
-            all_labels = []
-            for images, labels in test_loader:
-                outputs = model(images)
-                _, preds = torch.max(outputs, 1)
-                all_preds.extend(preds.numpy())
-                all_labels.extend(labels.numpy())
-        
-        # Compute metrics
-        precision, recall, f1 = utils.compute_precision_recall_f1(all_labels, all_preds)
-        accuracy = (np.array(all_preds) == np.array(all_labels)).mean()
-        
-        print(f"Best Model (from Round {self.best_round}) - Test Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}, F1 Score: {f1:.4f}")
-
 def main():
     parser = argparse.ArgumentParser(description="Flower Server")
     parser.add_argument("--model", type=str, default="mobilenet", choices=["efficientnet", "alexnet", "mobilenet"], help="Model architecture to use")
@@ -167,7 +143,7 @@ def main():
 
     fl.server.start_server(
         server_address="192.168.20.3:8080",
-        config=fl.server.ServerConfig(num_rounds=2),
+        config=fl.server.ServerConfig(num_rounds=4),
         strategy=strategy,
     )
 
