@@ -496,3 +496,31 @@ INFO:flwr:aggregate_evaluate: received 3 results and 0 failures
 INFO:flwr:
 INFO:flwr:[ROUND 11]
 INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=4, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (4 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=4, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (4 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:root:Tracking Loss and Model Performance
+INFO:flwr:Starting Flower server, config: num_rounds=4, no round_timeout
+INFO:flwr:Flower ECE: gRPC server running (4 rounds), SSL is disabled
+INFO:flwr:[INIT]
+INFO:flwr:Using initial global parameters provided by strategy
+INFO:flwr:Starting evaluation of initial global parameters
+INFO:flwr:Evaluation returned no results (`None`)
+INFO:flwr:
+INFO:flwr:[ROUND 1]
+INFO:flwr:configure_fit: strategy sampled 3 clients (out of 3)
