@@ -18,10 +18,12 @@ A privacy-preserving **federated learning system** built with **PyTorch** and **
    ```bash
    git clone https://github.com/HarryDo27/lungcancer-fl.git
    cd lungcancer-fl
-2. Run the requirement
+2. Run the requirement:
+    ```bash
     pip install -r requirements.txt
 3. Update server IP in server.py and client.py
 4. Run the system
+    ```bash
     ./run.sh
 
 ---
